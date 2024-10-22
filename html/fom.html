@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-top: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Name</p>
+    <input type="text" name="name" id="name" placeholder="Enter Your Name" />
+    <p id="pNam"></p>
+    <p>Password</p>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter Your Password"
+    />
+    <p id="pPas"></p>
+
+    <br />
+    <button id="btn">Submit</button>
+    <button id="btn_rem">Remove</button>
+    <!-- <div id="main"></div> -->
+    <script>
+      const name = document.getElementById("name");
+      const password = document.getElementById("password");
+      const submitBtn = document.getElementById("btn");
+      const pNam = document.getElementById("pNam");
+      const pPas = document.getElementById("pPas");
+      const btnRem = document.getElementById("btn_rem");
+
+      submitBtn.addEventListener("click", () => {
+        let valueName = name.value;
+        if (valueName === "") {
+          pNam.innerText = "Name: Value is empty, not defined";
+        } else if (valueName.length <= 3) {
+          pNam.innerText = "Name: Value is too small, not defined";
+        } else {
+          pNam.innerText = `Name: ${valueName}`;
+        }
+
+        var valuePass = password.value;
+        if (valuePass === "") {
+          pPas.innerText = "Password: Value is empty, not defined";
+        } else if (valuePass.length <= 6) {
+          pPas.innerText = "Password: Value is too short";
+        } else {
+          let special = "!@#$%^&*()_+~<>?,./\":;'{}|\\";
+          let num = "0123456789";
+          let str = "abcdefghijklmnopqrstuvwxyz";
+
+          let hasSpecialChar = false;
+          let hasNumber = false;
+          let hasAlphabet = false;
+
+          for (let i = 0; i < valuePass.length; i++) {
+            const element = valuePass[i];
+            if (special.includes(element)) {
+              hasSpecialChar = true;
+            } else if (num.includes(element)) {
+              hasNumber = true;
+            } else if (str.includes(element)) {
+              hasAlphabet = true;
+            }
+          }
+
+          if (hasSpecialChar && hasNumber && hasAlphabet) {
+            pPas.innerText = `Password: ${valuePass}`;
+            console.log("special Character Included");
+
+            let Obj = {
+              name: valueName,
+              password: valuePass,
+            };
+            localStorage.setItem("login", JSON.stringify(Obj));
+            console.log(JSON.stringify(Obj, null, 2));
+          } else {
+            pPas.innerText =
+              "Password: Must contain special characters, numbers, and alphabets";
+            alert("at least one special character or number");
+          }
+        }
+      });
+      btnRem.addEventListener("click", () => {
+        name.value = "";
+        pNam.innerText = "";
+        password.value = "";
+        pPas.innerText = "";
+        localStorage.removeItem("login");
+      });
+    </script>
+  </body>
+</html>

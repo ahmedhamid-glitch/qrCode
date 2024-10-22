@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qr-code || Scanner</title>
+    <style>
+      body {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-top: 150px;
+        gap: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left-side">
+      <input
+        type="text"
+        name="input"
+        id="input"
+        placeholder="Enter your username"
+      />
+      <button id="btn">Submit</button>
+    </div>
+    <div class="right-side">
+      <img
+        id="img"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=$=[example]"
+        alt="not found"
+      />
+    </div>
+    <script>
+      let input = document.getElementById("input");
+      let btn = document.getElementById("btn");
+      let img = document.getElementById("img");
+
+      btn.addEventListener("click", async () => {
+        let value = input.value;
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${value}`;
+      });
+    </script>
+  </body>
+</html>

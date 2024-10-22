@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Persons Table</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f7f7f7;
+      }
+
+      input,
+      button {
+        margin-bottom: 20px;
+        padding: 6px;
+        font-size: 16px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+      }
+
+      thead {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      thead th {
+        padding: 12px 15px;
+        text-align: left;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tbody tr:hover {
+        background-color: #ddd;
+      }
+
+      td {
+        padding: 10px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="name" name="input" id="input" placeholder="Search" />
+    <button id="btn">Submit</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Id:</th>
+          <th>Name:</th>
+          <th>Age:</th>
+          <th>JobTitle:</th>
+          <th>Experience:</th>
+        </tr>
+      </thead>
+      <tbody id="persons-table-body"></tbody>
+    </table>
+
+    <script>
+      const inputName = document.getElementById("input");
+      const subBtn = document.getElementById("btn");
+      const persons = [
+        {
+          id: "1 >>",
+          name: "John Doe",
+          age: 30,
+          jobTitle: "Software Engineer",
+          experience: "5 years",
+        },
+        {
+          id: "2 >>",
+          name: "Jane Smith",
+          age: 28,
+          jobTitle: "Data Scientist",
+          experience: "4 years",
+        },
+        {
+          id: "3 >>",
+          name: "Michael Johnson",
+          age: 35,
+          jobTitle: "Product Manager",
+          experience: "8 years",
+        },
+        {
+          id: "4 >>",
+          name: "Emily Davis",
+          age: 32,
+          jobTitle: "UX Designer",
+          experience: "6 years",
+        },
+        {
+          id: "5 >>",
+          name: "Chris Wilson",
+          age: 27,
+          jobTitle: "Frontend Developer",
+          experience: "3 years",
+        },
+        {
+          id: "6 >>",
+          name: "Sarah Brown",
+          age: 31,
+          jobTitle: "Marketing Manager",
+          experience: "7 years",
+        },
+        {
+          id: "7 >>",
+          name: "Alex Lee",
+          age: 29,
+          jobTitle: "Financial Analyst",
+          experience: "5 years",
+        },
+        {
+          id: "8 >>",
+          name: "Rachel Garcia",
+          age: 33,
+          jobTitle: "HR Specialist",
+          experience: "6 years",
+        },
+        {
+          id: "9 >>",
+          name: "Daniel Martinez",
+          age: 34,
+          jobTitle: "Operations Manager",
+          experience: "9 years",
+        },
+        {
+          id: "10 >>",
+          name: "Michelle Clark",
+          age: 26,
+          jobTitle: "Software Developer",
+          experience: "4 years",
+        },
+        {
+          id: "11 >>",
+          name: "Kevin Scott",
+          age: 32,
+          jobTitle: "UI/UX Designer",
+          experience: "7 years",
+        },
+        {
+          id: "12 >>",
+          name: "Emma Walker",
+          age: 29,
+          jobTitle: "Data Analyst",
+          experience: "5 years",
+        },
+        {
+          id: "13 >>",
+          name: "Steven White",
+          age: 31,
+          jobTitle: "Project Manager",
+          experience: "8 years",
+        },
+        {
+          id: "14 >>",
+          name: "Olivia Harris",
+          age: 28,
+          jobTitle: "Marketing Specialist",
+          experience: "4 years",
+        },
+        {
+          id: "15 >>",
+          name: "Andrew King",
+          age: 30,
+          jobTitle: "Frontend Engineer",
+          experience: "6 years",
+        },
+        {
+          id: "16 >>",
+          name: "Sophia Young",
+          age: 27,
+          jobTitle: "Product Designer",
+          experience: "3 years",
+        },
+        {
+          id: "17 >>",
+          name: "David Lopez",
+          age: 35,
+          jobTitle: "Business Analyst",
+          experience: "10 years",
+        },
+        {
+          id: "18 >>",
+          name: "Ava Martin",
+          age: 32,
+          jobTitle: "Sales Manager",
+          experience: "7 years",
+        },
+        {
+          id: "19 >>",
+          name: "James Baker",
+          age: 29,
+          jobTitle: "Full Stack Developer",
+          experience: "5 years",
+        },
+        {
+          id: "20 >>",
+          name: "Chloe Green",
+          age: 33,
+          jobTitle: "Customer Success Manager",
+          experience: "8 years",
+        },
+        {
+          id: "21 >>",
+          name: "Benjamin Young",
+          age: 31,
+          jobTitle: "IT Consultant",
+          experience: "6 years",
+        },
+        {
+          id: "22 >>",
+          name: "Mia Hall",
+          age: 28,
+          jobTitle: "Operations Analyst",
+          experience: "4 years",
+        },
+        {
+          id: "23 >>",
+          name: "Ethan Lewis",
+          age: 30,
+          jobTitle: "Software Architect",
+          experience: "9 years",
+        },
+        {
+          id: "24 >>",
+          name: "Natalie Wright",
+          age: 26,
+          jobTitle: "UX Researcher",
+          experience: "3 years",
+        },
+        {
+          id: "25 >>",
+          name: "Logan Adams",
+          age: 34,
+          jobTitle: "Digital Marketing Manager",
+          experience: "7 years",
+        },
+        {
+          id: "26 >>",
+          name: "Grace Morris",
+          age: 29,
+          jobTitle: "Technical Writer",
+          experience: "5 years",
+        },
+        {
+          id: "27 >>",
+          name: "Jacob Cook",
+          age: 31,
+          jobTitle: "Systems Analyst",
+          experience: "8 years",
+        },
+        {
+          id: "28 >>",
+          name: "Avery Bailey",
+          age: 27,
+          jobTitle: "Web Developer",
+          experience: "4 years",
+        },
+        {
+          id: "29 >>",
+          name: "Lily Rivera",
+          age: 32,
+          jobTitle: "Graphic Designer",
+          experience: "6 years",
+        },
+        {
+          id: "30 >>",
+          name: "Jackson Morgan",
+          age: 33,
+          jobTitle: "Software Tester",
+          experience: "7 years",
+        },
+        {
+          id: "31 >>",
+          name: "Madison Ward",
+          age: 30,
+          jobTitle: "Network Engineer",
+          experience: "5 years",
+        },
+        {
+          id: "32 >>",
+          name: "Lucas Torres",
+          age: 28,
+          jobTitle: "Content Manager",
+          experience: "3 years",
+        },
+        {
+          id: "33 >>",
+          name: "Isabella Reed",
+          age: 31,
+          jobTitle: "E-commerce Specialist",
+          experience: "6 years",
+        },
+        {
+          id: "34 >>",
+          name: "Gabriel Price",
+          age: 29,
+          jobTitle: "Technical Support Engineer",
+          experience: "4 years",
+        },
+        {
+          id: "35 >>",
+          name: "Aria Brooks",
+          age: 34,
+          jobTitle: "Business Development Manager",
+          experience: "8 years",
+        },
+        {
+          id: "36 >>",
+          name: "Grayson Ward",
+          age: 26,
+          jobTitle: "Data Engineer",
+          experience: "2 years",
+        },
+        {
+          id: "37 >>",
+          name: "Scarlett Foster",
+          age: 32,
+          jobTitle: "UI Designer",
+          experience: "7 years",
+        },
+        {
+          id: "38 >>",
+          name: "Leo Ramirez",
+          age: 30,
+          jobTitle: "Application Developer",
+          experience: "5 years",
+        },
+        {
+          id: "39 >>",
+          name: "Zoe Butler",
+          age: 28,
+          jobTitle: "Financial Advisor",
+          experience: "3 years",
+        },
+        {
+          id: "40 >>",
+          name: "Mateo Coleman",
+          age: 33,
+          jobTitle: "Product Owner",
+          experience: "6 years",
+        },
+        {
+          id: "41 >>",
+          name: "Victoria Russell",
+          age: 31,
+          jobTitle: "Marketing Coordinator",
+          experience: "5 years",
+        },
+        {
+          id: "42 >>",
+          name: "Elijah Brooks",
+          age: 29,
+          jobTitle: "Systems Engineer",
+          experience: "4 years",
+        },
+        {
+          id: "43 >>",
+          name: "Penelope Price",
+          age: 27,
+          jobTitle: "Recruitment Specialist",
+          experience: "3 years",
+        },
+        {
+          id: "44 >>",
+          name: "Sebastian Turner",
+          age: 34,
+          jobTitle: "SEO Analyst",
+          experience: "8 years",
+        },
+        {
+          id: "45 >>",
+          name: "Axel Foster",
+          age: 30,
+          jobTitle: "Project Coordinator",
+          experience: "5 years",
+        },
+        {
+          id: "46 >>",
+          name: "Aurora Gray",
+          age: 28,
+          jobTitle: "Digital Marketing Specialist",
+          experience: "4 years",
+        },
+        {
+          id: "47 >>",
+          name: "Wyatt Bell",
+          age: 32,
+          jobTitle: "UI/UX Developer",
+          experience: "6 years",
+        },
+        {
+          id: "48 >>",
+          name: "Emilia Cox",
+          age: 31,
+          jobTitle: "Content Strategist",
+          experience: "5 years",
+        },
+        {
+          id: "49 >>",
+          name: "Mateo Barnes",
+          age: 29,
+          jobTitle: "Operations Coordinator",
+          experience: "3 years",
+        },
+        {
+          id: "50 >>",
+          name: "Luna Howard",
+          age: 33,
+          jobTitle: "Business Analyst",
+          experience: "7 years",
+        },
+        {
+          id: "51 >>",
+          name: "Roman Price",
+          age: 27,
+          jobTitle: "Customer Support Specialist",
+          experience: "2 years",
+        },
+      ];
+
+      const table_body = document.getElementById("persons-table-body");
+
+      function tableRow(person) {
+        const row = document.createElement("tr");
+
+        const idCell = document.createElement("td");
+        idCell.textContent = person.id;
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = person.name;
+
+        const ageCell = document.createElement("td");
+        ageCell.textContent = person.age;
+
+        const jobCell = document.createElement("td");
+        jobCell.textContent = person.jobTitle;
+
+        const expeCell = document.createElement("td");
+        expeCell.textContent = person.experience;
+
+        row.appendChild(idCell);
+        row.appendChild(nameCell);
+        row.appendChild(ageCell);
+        row.appendChild(jobCell);
+        row.appendChild(expeCell);
+        table_body.appendChild(row);
+      }
+
+      persons.forEach((person) => {
+        tableRow(person);
+      });
+
+      subBtn.addEventListener("click", () => {
+        const inputValue = inputName.value;
+        const filteredArr = persons.filter((person) => {
+          return person.name.toLowerCase().includes(inputValue.toLowerCase());
+        });
+
+        table_body.innerHTML = "";
+
+        filteredArr.forEach((person) => {
+          tableRow(person);
+        });
+      });
+    </script>
+  </body>
+</html>
